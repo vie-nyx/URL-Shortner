@@ -3,7 +3,7 @@ const urlRoute = require('./routes/url');
 const cookieParser = require('cookie-parser');
 const staticRouter = require('./routes/staticRouter');
 const userRoute = require('./routes/user');
-const {restrictToLoggedinUserOnly,checkAuth} = require('./middlewares/auth')
+const {checkForAuthetication,restrictTo} = require('./middlewares/auth')
 const path = require('path');
 const { connectToMongoDB } = require('./connection');
 const URL = require('./models/url');
@@ -20,9 +20,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForAuthetication);
 // Route handlers
-app.use('/',checkAuth, staticRouter);
-app.use('/url',restrictToLoggedinUserOnly,urlRoute);
+app.use('/', staticRouter);
+app.use('/url',restrictTo(['NORMAL','ADMIN']),urlRoute);
 app.use('/user', userRoute);
 app.use('/:id([a-zA-Z0-9]+)', urlRoute); // Restrict ':id' to alphanumeric strings
 
