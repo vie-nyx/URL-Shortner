@@ -2,153 +2,214 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener</title>
 
-        h1 {
-            margin: 20px 0;
-            font-size: 2rem;
-            color: #444;
-        }
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            width: 90%;
-            max-width: 400px;
-        }
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --radius: 0.75rem;
+    }
 
-        form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        form input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: #333;
+      padding: 2rem 1rem;
+    }
 
-        form button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-        }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
 
-        form button:hover {
-            background-color: #0056b3;
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
 
-        table {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--primary);
+    }
 
-        table thead {
-            background-color: #007bff;
-            color: #fff;
-        }
+    .btn {
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
 
-        table th,
-        table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+    .btn-outline {
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      background: transparent;
+    }
 
-        table tr:hover {
-            background-color: #f1f1f1;
-        }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
 
-        .no-urls {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #777;
-            margin-top: 20px;
-        }
-    </style>
+    input {
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .url-generated {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .url-generated a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .url-generated a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background: var(--primary);
+      color: white;
+    }
+
+    th,
+    td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:hover {
+      background: #f1f5ff;
+    }
+
+    .no-urls {
+      text-align: center;
+      color: #777;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>URL SHORTENER</h1>
+  <div class="container">
+    <div class="header">
+      <h1>URL Shortener</h1>
+      <a href="/login" class="btn btn-outline">Logout</a>
+    </div>
 
     <% if (locals.id) { %>
-        <p>URL Generated: <a href="http://localhost:8001/url/<%= id %>" target="_blank">http://localhost:8001/url/<%= id %></a></p>
+      <div class="url-generated">
+        URL Generated:
+        <a href="http://localhost:8001/url/<%= id %>" target="_blank">
+          http://localhost:8001/url/<%= id %>
+        </a>
+      </div>
     <% } %>
 
-    <div>
-        <form method="POST" action="/url">
-            <label for="url">Enter Your Original URL</label>
-            <input type="text" id="url" name="url" placeholder="https://example.com" required>
-            <button type="submit">Generate</button>
-        </form>
+    <div class="card">
+      <form method="POST" action="/url">
+        <label for="url">Enter Your Original URL</label>
+        <input type="text" id="url" name="url" placeholder="https://example.com" required />
+        <button type="submit" class="btn btn-primary">Generate</button>
+      </form>
     </div>
 
-    <div>
-        <% if (locals.urls && urls.length > 0) { %>
-            <table>
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>ShortID</th>
-                        <th>Redirect URL</th>
-                        <th>Clicks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% urls.forEach((url, index) => { %>
-                        <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= url.shortId %></td>
-                            <td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
-                            <td><%= url.visitedHistory.length %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        <% } else { %>
-            <p class="no-urls">No URLs found</p>
-        <% } %>
+    <div class="card">
+      <% if (locals.urls && urls.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>ShortID</th>
+              <th>Redirect URL</th>
+              <th>Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% urls.forEach((url, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= url.shortId %></td>
+                <td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
+                <td><%= url.visitedHistory.length %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p class="no-urls">No URLs found</p>
+      <% } %>
     </div>
+  </div>
 </body>
 
 </html>

@@ -5,7 +5,7 @@ const URL = require("../models/url");  // Make sure to require the URL model
 // Home route to render all URLs
 router.get('/', async (req, res) => {
     try {
-        if(!req.user) return res.redirect('/login');
+        if(!req.user) return res.redirect('/signup');
         const allUrls = await URL.find({createdBy:req.user._id});  // Get all URLs from MongoDB
         console.log('URLs fetched:', allUrls); 
         return res.render("home", { urls: allUrls });  // Pass 'urls' to the view
